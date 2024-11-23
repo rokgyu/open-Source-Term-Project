@@ -1,4 +1,4 @@
-from model_loader_1 import load_model  # 첫 번째 모델 로딩 함수
+from model_loader_1 import load_model_1  # 첫 번째 모델 로딩 함수
 from model_loader_2 import load_model_2  # 두 번째 모델 로딩 함수
 from model_loader_3 import load_model_3  # 세 번째 모델 로딩 함수 
 
