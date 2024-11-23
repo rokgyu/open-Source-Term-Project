@@ -1,33 +1,44 @@
-from model_loader_1 import load_model_1  # 첫 번째 모델 로딩 함수
-from model_loader_2 import load_model_2  # 두 번째 모델 로딩 함수
-from model_loader_3 import load_model_3  # 세 번째 모델 로딩 함수 
+import torch
+from model_loader import load_model_1, load_model_2, load_model_3
 
-# 번역 함수 정의
-def translate_korean_to_english(tokenizer, model, korean_text):
-    inputs = tokenizer(korean_text, return_tensors="pt", padding=True)
-    outputs = model.generate(**inputs)
-    translated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+def translate_korean_to_english(tokenizer, model, korean_text, model_type="default"):
+    """
+    주어진 모델과 토크나이저를 사용하여 한국어를 영어로 번역합니다.
+    """
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = model.to(device)
+    
+    if model_type == "m2m100":
+        inputs = tokenizer(korean_text, return_tensors="pt").to(device)
+        generated_tokens = model.generate(
+            **inputs,
+            forced_bos_token_id=tokenizer.get_lang_id("en"),
+            max_length=128
+        )
+    elif model_type == "nllb":
+        tokenizer.src_lang = "kor_Latn"
+        inputs = tokenizer(korean_text, return_tensors="pt").to(device)
+        generated_tokens = model.generate(
+            **inputs,
+            forced_bos_token_id=tokenizer.convert_tokens_to_ids("eng_Latn"),
+            max_length=128
+        )
+    else:
+        inputs = tokenizer(korean_text, return_tensors="pt").to(device)
+        generated_tokens = model.generate(**inputs, max_length=128)
+    
+    translated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=True)
     return translated_text
 
-if __name__ == "__main__":
-
-    # 모델로드
+def get_translations(korean_text):
+    # 모델 로드
     tokenizer_1, model_1 = load_model_1()
     tokenizer_2, model_2 = load_model_2()
     tokenizer_3, model_3 = load_model_3()
 
-
-    # 사용자 입력 받기
-    korean_text = input("번역할 한국어 텍스트를 입력하세요: ")
-
-
-    # 모델 1로만 번역 실행
+    # 각 모델로 번역 실행
     translated_text_1 = translate_korean_to_english(tokenizer_1, model_1, korean_text)
-    translated_text_2 = translate_korean_to_english(tokenizer_2, model_2, korean_text)
-    translated_text_3 = translate_korean_to_english(tokenizer_3, model_3, korean_text)
+    translated_text_2 = translate_korean_to_english(tokenizer_2, model_2, korean_text, "m2m100")
+    translated_text_3 = translate_korean_to_english(tokenizer_3, model_3, korean_text, "nllb")
 
-    # 번역 결과 출력
-    print("\n--- 번역 결과 ---")
-    print("모델 1 (Helsinki-NLP/opus-mt-ko-en):", translated_text_1)
-    print("모델 2 (facebook/m2m100_418M):", translated_text_2)
-    print("모델 3 (t5-small):", translated_text_3)
+    return translated_text_1, translated_text_2, translated_text_3
