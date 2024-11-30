@@ -31,7 +31,7 @@ def translate_korean_to_english(tokenizer, model, korean_text, model_type="defau
     return translated_text
 
 def get_translations(korean_text):
-    # 모델 로드
+    # 모델 로드 (로컬 모델 사용)
     tokenizer_1, model_1 = load_model_1()
     tokenizer_2, model_2 = load_model_2()
     tokenizer_3, model_3 = load_model_3()
