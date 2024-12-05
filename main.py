@@ -28,4 +28,5 @@ if __name__ == "__main__":
     best_translation = [translated_text_1, translated_text_2, translated_text_3][best_index]
 
     print(f"\n=== 최종 선택된 번역 ===")
-    print(f"모델 {best_index + 1}: {best_translation} (점수: {max(scores)})")
+    models = ['Helsinki-NLP', 'M2M100', 'NLLB']
+    print(f"{models[best_index]}: {best_translation} (점수: {max(scores)})")
