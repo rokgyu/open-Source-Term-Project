@@ -42,3 +42,47 @@ def get_translations(korean_text):
     translated_text_3 = translate_korean_to_english(tokenizer_3, model_3, korean_text, "nllb")
 
     return translated_text_1, translated_text_2, translated_text_3
+
+
+
+def translate_english_to_korean(tokenizer, model, english_text, model_type="default"):
+    """
+    주어진 모델과 토크나이저를 사용하여 영어를 한국어로 번역합니다.
+    """
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = model.to(device)
+    
+    if model_type == "m2m100":
+        inputs = tokenizer(english_text, return_tensors="pt").to(device)
+        generated_tokens = model.generate(
+            **inputs,
+            forced_bos_token_id=tokenizer.get_lang_id("ko"),
+            max_length=128
+        )
+    elif model_type == "nllb":
+        tokenizer.src_lang = "eng_Latn"
+        inputs = tokenizer(english_text, return_tensors="pt").to(device)
+        generated_tokens = model.generate(
+            **inputs,
+            forced_bos_token_id=tokenizer.convert_tokens_to_ids("kor_Hang"),
+            max_length=128
+        )
+    else:
+        inputs = tokenizer(english_text, return_tensors="pt").to(device)
+        generated_tokens = model.generate(**inputs, max_length=128)
+    
+    translated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=True)
+    return translated_text
+
+def get_translations(english_text):
+    # 모델 로드 (로컬 모델 사용)
+    tokenizer_4, model_4 = load_model_4()
+    tokenizer_5, model_5 = load_model_5()
+    tokenizer_3, model_3 = load_model_3()
+
+    # 각 모델로 번역 실행
+    translated_text_4 = translate_english_to_korean(tokenizer_1, model_1, english_text)
+    translated_text_5 = translate_english_to_korean(tokenizer_2, model_2, english_text, "m2m100")
+    translated_text_3 = translate_english_to_korean(tokenizer_3, model_3, english_text, "nllb")
+
+    return translated_text_4, translated_text_5, translated_text_3
