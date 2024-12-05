@@ -26,8 +26,8 @@ def load_model_3():
 def load_model_4():
     """Helsinki-NLP의 English-Korean 번역 모델을 로드합니다 (로컬에서)."""
     model_name = "./local_models/Helsinki-NLP_opus-mt-tc-big-en-ko"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    tokenizer = MarianTokenizer.from_pretrained(model_name)
+    model = MarianMTModel.from_pretrained(model_name)
     return tokenizer, model
 
 def load_model_5():
