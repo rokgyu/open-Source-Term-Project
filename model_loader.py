@@ -1,4 +1,4 @@
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, MarianMTModel, MarianTokenizer
 from transformers import M2M100Tokenizer, M2M100ForConditionalGeneration
 
 def load_model_1():
@@ -21,4 +21,19 @@ def load_model_3():
     model_name = "./local_models/facebook_nllb-200-distilled-600M"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    return tokenizer, model
+
+def load_model_4():
+    """Helsinki-NLP의 English-Korean 번역 모델을 로드합니다 (로컬에서)."""
+    model_name = "./local_models/Helsinki-NLP_opus-mt-tc-big-en-ko"
+    tokenizer = MarianTokenizer.from_pretrained(model_name)
+    model = MarianMTModel.from_pretrained(model_name)
+    return tokenizer, model
+
+def load_model_5():
+    """Facebook의 M2M100 다국어 번역 모델을 로드합니다 (로컬에서)."""
+    model_name = "./local_models/facebook_m2m100_418M"
+    tokenizer = M2M100Tokenizer.from_pretrained(model_name)
+    model = M2M100ForConditionalGeneration.from_pretrained(model_name)
+    tokenizer.src_lang = "en"
     return tokenizer, model

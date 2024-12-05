@@ -5,6 +5,7 @@ seq2seq_models = [
     "Helsinki-NLP/opus-mt-ko-en",
     "facebook/m2m100_418M",
     "facebook/nllb-200-distilled-600M"
+    "Helsinki-NLP/opus-mt-tc-big-en-ko"
 ]
 language_models = [
     "gpt2"  # 추가된 GPT-2 모델

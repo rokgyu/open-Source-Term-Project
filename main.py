@@ -36,6 +36,7 @@ if (x == 0):
         print(f"{models[best_index]}: {best_translation} (점수: {max(scores)})")
 
 
+
 if (x == 1):
     
     if __name__ == "__main__":
@@ -68,3 +69,8 @@ if (x == 1):
        
         print(f"{models[best_index]}: {best_translation} (점수: {max(scores)})")
         
+
+    print(f"\n=== 최종 선택된 번역 ===")
+    models = ['Helsinki-NLP', 'M2M100', 'NLLB']
+    print(f"{models[best_index]}: {best_translation} (점수: {max(scores)})")
+
