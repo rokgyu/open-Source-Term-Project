@@ -1,5 +1,5 @@
 import torch
-from model_loader import load_model_1, load_model_2, load_model_3
+from model_loader import load_model_1, load_model_2, load_model_3, load_model_4, load_model_5
 
 def translate_korean_to_english(tokenizer, model, korean_text, model_type="default"):
     """
@@ -30,19 +30,19 @@ def translate_korean_to_english(tokenizer, model, korean_text, model_type="defau
     translated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=True)
     return translated_text
 
-def get_translations(korean_text):
-    # 모델 로드 (로컬 모델 사용)
+def get_translations_ko_to_en(korean_text):
+    """
+    한국어를 영어로 번역하는 함수.
+    """
     tokenizer_1, model_1 = load_model_1()
     tokenizer_2, model_2 = load_model_2()
     tokenizer_3, model_3 = load_model_3()
 
-    # 각 모델로 번역 실행
     translated_text_1 = translate_korean_to_english(tokenizer_1, model_1, korean_text)
     translated_text_2 = translate_korean_to_english(tokenizer_2, model_2, korean_text, "m2m100")
     translated_text_3 = translate_korean_to_english(tokenizer_3, model_3, korean_text, "nllb")
 
     return translated_text_1, translated_text_2, translated_text_3
-
 
 
 def translate_english_to_korean(tokenizer, model, english_text, model_type="default"):
@@ -74,15 +74,16 @@ def translate_english_to_korean(tokenizer, model, english_text, model_type="defa
     translated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=True)
     return translated_text
 
-def get_translations(english_text):
-    # 모델 로드 (로컬 모델 사용)
+def get_translations_en_to_ko(english_text):
+    """
+    영어를 한국어로 번역하는 함수.
+    """
     tokenizer_4, model_4 = load_model_4()
     tokenizer_5, model_5 = load_model_5()
     tokenizer_3, model_3 = load_model_3()
 
-    # 각 모델로 번역 실행
-    translated_text_4 = translate_english_to_korean(tokenizer_1, model_1, english_text)
-    translated_text_5 = translate_english_to_korean(tokenizer_2, model_2, english_text, "m2m100")
+    translated_text_4 = translate_english_to_korean(tokenizer_4, model_4, english_text)
+    translated_text_5 = translate_english_to_korean(tokenizer_5, model_5, english_text, "m2m100")
     translated_text_3 = translate_english_to_korean(tokenizer_3, model_3, english_text, "nllb")
 
     return translated_text_4, translated_text_5, translated_text_3
