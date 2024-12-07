@@ -1,10 +1,11 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, GPT2Tokenizer, GPT2LMHeadModel
+import os
 
 # Seq2Seq 및 언어 모델 목록
 seq2seq_models = [
     "Helsinki-NLP/opus-mt-ko-en",
     "facebook/m2m100_418M",
-    "facebook/nllb-200-distilled-600M"
+    "facebook/nllb-200-distilled-600M", 
     "Helsinki-NLP/opus-mt-tc-big-en-ko"
 ]
 language_models = [
@@ -19,6 +20,7 @@ for model_name in seq2seq_models:
 
     # 로컬 경로에 저장
     save_path = f"./local_models/{model_name.replace('/', '_')}"
+    os.makedirs(save_path, exist_ok=True)
     tokenizer.save_pretrained(save_path)
     model.save_pretrained(save_path)
     print(f"Model saved at {save_path}")
@@ -31,6 +33,7 @@ for model_name in language_models:
 
     # 로컬 경로에 저장
     save_path = f"./local_models/{model_name.replace('/', '_')}"
+    os.makedirs(save_path, exist_ok=True)
     tokenizer.save_pretrained(save_path)
     model.save_pretrained(save_path)
     print(f"Model saved at {save_path}")
