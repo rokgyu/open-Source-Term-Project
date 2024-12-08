@@ -27,3 +27,7 @@ pip install transformers torch sacremoses ipywidgets
 ``` 
 on Terminal to install necessary packages.
 After that you can use it.
+
+---
+
+>[Google Colab](https://colab.research.google.com/drive/1WySGvTKokF9fG6M31oHkZjKRQxNdvccs?usp=sharing)
