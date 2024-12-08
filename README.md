@@ -30,4 +30,13 @@ After that you can use it.
 
 ---
 
+환경 구축에 문제가 생긴다면 구글 코랩에서 실행 가능합니다.
+
 >[Google Colab](https://colab.research.google.com/drive/1WySGvTKokF9fG6M31oHkZjKRQxNdvccs?usp=sharing)
+
+순서대로 쉘을 실행하시면 됩니다.
+
+---
+#### DEMO
+
+![demo-image](https://github.com/user-attachments/assets/8d82bc7a-36de-4cfd-bdae-8d83a999e40c)
