@@ -22,10 +22,26 @@ text_input = widgets.Text(
 
 # 실행 버튼
 translate_button = widgets.Button(
-    description='번역 실행',
-    button_style='primary',  # 색상 스타일
+    description='🔄 번역 실행',
+    button_style='success',
     tooltip='번역을 시작합니다.',
+    icon='language',
 )
+
+translate_button.layout = widgets.Layout(
+    width='200px',
+    height='40px',
+    margin='10px 0px',
+    border='2px solid #28a745',
+    border_radius='10px',
+    padding='5px'
+)
+
+translate_button.style = {
+    'font_weight': 'bold',
+    'font_size': '14px',
+    'text_transform': 'uppercase',
+}
 
 # 출력 위젯
 output_area = widgets.Output()
